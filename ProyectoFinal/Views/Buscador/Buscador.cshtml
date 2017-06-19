@@ -1,0 +1,44 @@
+﻿@model ProyectoFinal.Models.ModeloGenerico
+
+@{
+    ViewBag.Title = "Buscador";
+}
+
+<div class="row">
+    <div class="col-md-3">
+        <h3>Filtros</h3>
+
+        <div class="form-group">
+            <h4>Tipo</h4>
+            <input id="banda" type="checkbox" name="Tipo" value="Banda" /> Banda
+            <input id="manager" type="checkbox" name="Tipo" value="Manager" /> Manager
+            <input id="sala" type="checkbox" name="Tipo" value="Sala" /> Sala
+        </div>
+
+        <div id="estilos" class="form-group">
+            <h4>Estilo</h4>
+            <input id="rock" type="checkbox" name="Estilo" value="Rock" /> Rock
+            <input id="indie" type="checkbox" name="Estilo" value="Indie" /> Indie
+            <input id="clasica" type="checkbox" name="Estilo" value="Clasica" /> Clásica
+            <input id="rap" type="checkbox" name="Estilo" value="Rap" /> Rap
+            <input id="metal" type="checkbox" name="Estilo" value="Metal" /> Metal
+            <input id="pop" type="checkbox" name="Estilo" value="Pop" /> Pop
+            <input id="latina" type="checkbox" name="Estilo" value="Latina" /> Latina
+        </div>
+        <button id="filtro">Aplicar filtros</button>
+    </div>
+    <div class="col-md-9">
+        <h2>Encontrados</h2>
+
+        @foreach (var encontrado in Model.Buscados)
+        {
+            <div>
+                <h4 data-tipo="@Model.Tipo" data-estilo="@Model.Generales.Estilo"><a href="@Url.Action("Index", "DatosUsuarios", new { id = encontrado.Id})"> @encontrado.Generales.Nombre </a></h4>
+                <p>Descripción: @encontrado.Generales.Descripcion</p>
+                <p>Ciudad: @encontrado.Generales.Ciudad</p>
+                <p>País: @encontrado.Generales.Pais</p>
+            </div>
+
+        }
+    </div>
+</div>

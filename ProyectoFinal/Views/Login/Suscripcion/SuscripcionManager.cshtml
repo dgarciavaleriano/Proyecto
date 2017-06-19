@@ -1,0 +1,32 @@
+﻿@model ProyectoFinal.Models.ModeloGenerico
+
+@{
+    ViewBag.Title = "Suscripción Manager";
+}
+
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <h2>Suscripción Manager</h2>
+
+        <form method="POST" action="@Url.Action("SuscripcionDB", "Login")">
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" class="form-control" placeholder="Email" name="Email" />
+                <label>Password</label>
+                <input type="password" class="form-control" placeholder="Password" name="Password" />
+                <label>Nombre</label>
+                <input type="text" class="form-control" placeholder="Nombre" name="Nombre" />
+                <label>Ciudad</label>
+                <input class="form-control" type="text" placeholder="Ciudad" name="Ciudad" />
+                <label>País</label>
+                <input class="form-control" type="text" placeholder="País" name="Pais" />
+                <input type="hidden" name="Tipo" value="@Model.Tipo" />
+            </div>
+            <input type="hidden" name="Tipo" value="@Model.Tipo" />
+            <input type="hidden" name="Estilo" value="@Model.Generales.Estilo" />
+            <input type="submit" class="btn btn-default" value="Alta" />
+        </form>
+    </div>
+    <div class="col-md-4"></div>
+</div>

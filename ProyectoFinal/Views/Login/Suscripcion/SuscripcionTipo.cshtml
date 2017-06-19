@@ -1,0 +1,24 @@
+﻿
+@{
+    ViewBag.Title = "Tipo de suscripción";
+}
+
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <h2>Elige el tipo de suscripción</h2>
+        <br />
+
+        <form method="POST" action="@Url.Action("Suscripcion", "Login")">
+            <div class="radio"><input type="radio" name="tipo" value="1">Banda</div>
+            
+            <div class="radio">
+                <input type="radio" name="tipo" value="2">Manager</div>
+            <div class="radio">
+                <input type="radio" name="tipo" value="3">Sala</div>
+                <input type="submit" class="btn btn-default" value="Siguiente" />
+</form>
+    </div>
+    <div class="col-md-4"></div>
+</div>
+

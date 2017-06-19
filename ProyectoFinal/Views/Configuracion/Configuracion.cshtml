@@ -1,0 +1,106 @@
+﻿@model ProyectoFinal.Models.ModeloGenerico
+
+@{
+    ViewBag.Title = "Configuracion";
+}
+
+<h1 id="tipo" data-tipo="@Model.Tipo" class="text-center">Configuración</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <h3>Datos</h3>
+        <form method="POST" action="@Url.Action("Index", "Configuracion")">
+            <div class="form-group">
+                <label>Nombre</label>
+                <input type="text" name="Nombre" class="form-control" value="@Model.Generales.Nombre" /><br />
+                @if (Model.Tipo.ToString().Equals("Banda"))
+            {
+                    <label>Estilo</label>
+                    <select class="Banda form-control" name="Estilo">
+
+                        @foreach (var estilo in Model.Estilos)
+                        {
+                            if (estilo != ProyectoFinal.Models.Enum.Estilo.SinEstilo)
+                            {
+                                if (estilo == Model.Generales.Estilo)
+                                {
+                                    <option value="@estilo" selected>@estilo</option>
+                                }
+                                else
+                                {
+                                    <option value="@estilo">@estilo</option>
+                                }
+
+                            }
+                        }
+                    </select>
+                }
+                <label>Ciudad</label>
+                <input type="text" class="form-control" name="Ciudad" value="@Model.Generales.Ciudad" /><br />
+                <label>Pais</label>
+                <input type="text" class="form-control" name="Pais" value="@Model.Generales.Pais" /><br />
+                <label>Descripción</label>
+                @Html.TextArea("Descripcion", Model.Generales.Descripcion, new { @class = "form-control" }) <br />
+                <label class="Banda">Influencias</label>
+                <input class="Banda form-control" type="text" name="Sonido" value="@Model.Generales.Sonido" /><br />
+                <label class="Manager">Web Site</label>
+                <input class="Manager form-control" type="text" name="Website" value="@Model.Generales.Website" /><br />
+                <label class="Sala">Dirección</label>
+                <input class="Sala form-control" type="text" name="Direccion" value="@Model.Generales.Direccion" /><br />
+                <label class="Sala">Dirección Alternativa</label>
+                <input class="Sala form-control" type="text" name="Direccion2" value="@Model.Generales.Direccion2" /><br />
+                <input type="hidden" name="Id" value="@Model.Id" />
+            </div>
+            <input type="submit" class="btn btn-default" value="Modificar" />
+        </form>
+        <br />
+    </div>
+    <div class="col-md-4">
+        <div class="Banda">
+            <h3>Subir canciones</h3>
+            @using (Html.BeginForm("SubirAudio", "Configuracion", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="form-group">
+                    <label>Nombre de la canción</label>
+                    <input class="form-control" type="text" name="Nombre" />
+                    <label>Archivo</label>
+                    <input type="file" name="file" />
+                    <input type="hidden" name="Id" value="@Model.Id" />
+                </div>
+                <button class="btn btn-default" type="submit">Subir canción</button>
+            }
+            <br />
+            <h4>Canciones subidas</h4>
+            @foreach (var cancion in Model.Canciones)
+            {
+                <p style="float:left;">@cancion.Nombre </p>  <a class="btn btn-default" style="float:right;" href="@Url.Action("BorrarCancion", "Configuracion", new { idCancion = cancion.Id, id = Model.Id})">Borrar Canción</a>
+            }
+            <br />
+        </div>
+    </div>
+    <div class="col-md-4">
+        <h3>Subir fotos</h3>
+        @using (Html.BeginForm("SubirFoto", "Configuracion", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <div class="form-group">
+                <label>Nombre para la foto</label>
+                <input class="form-control" type="text" name="Nombre" />
+                <label>Descripción de la foto</label>
+                @Html.TextArea("Descripcion2", new { @class = "form-control" }) <br />
+                <label>Archivo</label>
+                <input type="file" name="file" />
+                <input type="hidden" name="Id" value="@Model.Id" />
+                <input type="checkbox" name="Perfil" value="true" /> <label>Establecer como foto de perfil</label>
+            </div>
+                <button type="submit">Subir foto</button>
+        }
+        <br />
+        <h4>Fotos subidas</h4>
+        @foreach (var foto in Model.Fotos)
+        {
+            <img src="@foto.Ruta" alt="foto.Nombre" height="50" width="50" /> <a style="float:right; " class="btn btn-default" href="@Url.Action("CambiarFotoPerfil", "Configuracion", new { idCancion = foto.Id, id = Model.Id})">Establecer como foto de perfil</a> <a style="float:right;" class="btn btn-default" href="@Url.Action("BorrarFoto", "Configuracion", new { idCancion = foto.Id, id = Model.Id})">Borrar Foto</a>
+        }
+        <br />
+    </div>
+</div>
+<p>Si desea darse de baja pinche en el <a href="@Url.Action("Baja", "Configuracion", new { id = Model.Id})">enlace</a></p>
